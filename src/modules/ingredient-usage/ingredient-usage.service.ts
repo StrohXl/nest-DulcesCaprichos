@@ -40,10 +40,11 @@ export class IngredientUsageService {
 
   async update(id: number, updateIngredientUsageDto: UpdateIngredientUsageDto) {
     const ingredientUsage = await this.findOne(id);
-    this.iuRepo.merge(ingredientUsage, updateIngredientUsageDto);
-    ingredientUsage.ingredient = await this.ingredientService.findOne(
+    const { quantity } = updateIngredientUsageDto;
+    const ingredient = await this.ingredientService.findOne(
       updateIngredientUsageDto.ingredient,
     );
+    this.iuRepo.merge(ingredientUsage, { quantity, ingredient });
     return this.iuRepo.save(ingredientUsage);
   }
 
