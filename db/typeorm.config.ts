@@ -11,8 +11,8 @@ const config = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['src/modules/*/entities/*entity.ts'],
-  migrations: ['db/migrations/*.ts'],
+  entities: ['src/modules/*/entities/*entity.{ts,js}'],
+  migrations: ['db/migrations/*.{ts,js}'],
   autoLoadEntities: true,
   synchronize: false,
 };
