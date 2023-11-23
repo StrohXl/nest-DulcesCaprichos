@@ -33,5 +33,5 @@ export class ConfirmUser {
   
   @Exclude()
   @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-  updateAt: Date;
+  updateAt: Date;  
 }
