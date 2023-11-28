@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginDto } from './dto/login.dto';
 
@@ -18,6 +10,4 @@ export class LoginController {
   login(@Body() user: LoginDto) {
     return this.loginService.login(user);
   }
-  @Post()
-  outLogin() {}
 }

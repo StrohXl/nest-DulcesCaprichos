@@ -13,7 +13,6 @@ import { IngredientUsageModule } from './modules/ingredient-usage/ingredient-usa
 import { HistorialDeComprasModule } from './modules/historial-de-compras/historial-de-compras.module';
 import { AuthModule } from './modules/auth/auth.module';
 import 'dotenv/config';
-import { JwtModule } from '@nestjs/jwt';
 import { SolicitudModule } from './modules/solicitud/solicitud.module';
 import { SolicitudDeCompraModule } from './modules/solicitud-de-compra/solicitud-de-compra.module';
 

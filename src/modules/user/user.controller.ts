@@ -33,11 +33,6 @@ export class UserController {
     return this.userService.findEmailOne(email.email, 'find');
   }
 
-  @Get('/recovery-password')
-  recoverPassword(@Param('email') email: Email){
-
-  }
-
   @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {

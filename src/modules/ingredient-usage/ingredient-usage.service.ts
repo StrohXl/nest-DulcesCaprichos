@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IngredientUsage } from './entities/ingredient-usage.entity';
 import { Repository } from 'typeorm';
 import { IngredientsService } from '../ingredients/ingredients.service';
-import { Ingredient } from '../ingredients/entities/ingredient.entity';
 
 @Injectable()
 export class IngredientUsageService {

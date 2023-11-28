@@ -49,8 +49,8 @@ export class UserService {
 
   async findEmail() {
     const users = this.userRepo.find({ select: { email: true } });
-    if(!users){
-      throw new NotFoundException('No existe un usaurio con ese correo')
+    if (!users) {
+      throw new NotFoundException('No existe un usaurio con ese correo');
     }
     return users;
   }

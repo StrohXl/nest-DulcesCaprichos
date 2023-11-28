@@ -57,8 +57,6 @@ export class ProductService {
     return product;
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto) {}
-
   async remove(id: number) {
     await this.findOne(id);
     this.productRepo.delete(id);

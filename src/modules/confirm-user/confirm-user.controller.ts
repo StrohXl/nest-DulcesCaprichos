@@ -9,8 +9,6 @@ import {
 } from '@nestjs/common';
 import { ConfirmUserService } from './confirm-user.service';
 import { CreateConfirmUserDto } from './dto/create-confirm-user.dto';
-import { UpdateConfirmUserDto } from './dto/update-confirm-user.dto';
-import { CreateUserDto } from '../user/dto/create-user.dto';
 import { ConfirmEmail } from './dto/send-email-user.dto';
 
 @Controller('confirm-user')
@@ -38,10 +36,7 @@ export class ConfirmUserController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateConfirmUserDto: UpdateConfirmUserDto,
-  ) {
+  update(@Param('id') id: string) {
     return this.confirmUserService.update(+id);
   }
 

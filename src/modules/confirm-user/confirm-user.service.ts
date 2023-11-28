@@ -3,22 +3,18 @@ import {
   NotFoundException,
   HttpException,
   HttpStatus,
-  Inject,
   BadRequestException,
 } from '@nestjs/common';
 import { CreateConfirmUserDto } from './dto/create-confirm-user.dto';
-import { UpdateConfirmUserDto } from './dto/update-confirm-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfirmUser } from './entities/confirm-user.entity';
 import { Repository } from 'typeorm';
 import * as nodemailer from 'nodemailer';
-import { nanoid, customAlphabet } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import { Email } from '../../components/email';
 import * as bcrypt from 'bcrypt';
 import { ConfirmEmail } from './dto/send-email-user.dto';
 import { UserService } from '../user/user.service';
-import { url } from 'inspector';
 
 @Injectable()
 export class ConfirmUserService {
@@ -53,8 +49,6 @@ export class ConfirmUserService {
       HttpStatus.OK,
     );
   }
-
-  async findEmail(email: string, create?: boolean) {}
 
   async confirmToken(body: CreateConfirmUserDto) {
     const id = body.id;
