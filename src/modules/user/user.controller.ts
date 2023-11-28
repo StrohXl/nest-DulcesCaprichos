@@ -12,18 +12,30 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '../auth/guards/jwt.guard';
+import { Email } from './dto/email-user.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/confirm')
-  confirmToken() {}
-
-  @UseGuards(AuthGuard)
   @Get()
   findAll(@Query() query: any) {
     return this.userService.findAll(query);
+  }
+
+  @Get('/email')
+  findEmail() {
+    return this.userService.findEmail();
+  }
+
+  @Get('/email/:email')
+  findEmailOne(@Param('email') email: Email) {
+    return this.userService.findEmailOne(email.email, 'find');
+  }
+
+  @Get('/recovery-password')
+  recoverPassword(@Param('email') email: Email){
+
   }
 
   @UseGuards(AuthGuard)

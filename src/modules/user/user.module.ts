@@ -4,7 +4,6 @@ import { UserController } from './user.controller';
 import { User } from './entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { JwtModule } from '@nestjs/jwt';
-import { SolicitudDeCompraModule } from '../solicitud-de-compra/solicitud-de-compra.module';
 
 @Module({
   imports: [

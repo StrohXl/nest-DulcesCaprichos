@@ -13,8 +13,9 @@ import { FindOptionsWhere, In, Repository } from 'typeorm';
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+
   async create(createUserDto: CreateUserDto) {
-    await this.findEmail(createUserDto.email, 'create');
+    await this.findEmailOne(createUserDto.email, 'create');
     const newUser = this.userRepo.create(createUserDto);
     return this.userRepo.save(newUser);
   }
@@ -26,17 +27,32 @@ export class UserService {
     }
     return this.userRepo.find({
       where,
-      relations: ['solicitudesDeCompra.solicitud.idIngredient'],
+      select: { id: true, email: true },
     });
   }
 
-  async findEmail(email: string, typeFunction: string) {
+  async findEmailOne(email: string, typeFunction: string) {
+    const user = await this.userRepo.findOne({ where: { email } });
     if (typeFunction === 'create') {
-      const user = await this.userRepo.findOne({ where: { email } });
       if (user) {
         throw new ConflictException('Ya existe un usuario con ese email');
+      } else {
+        throw new NotFoundException('El usuario con ese email no se encuentra');
       }
+    } else {
+      if (!user) {
+        throw new NotFoundException('El usuario con ese email no se encuentra');
+      }
+      return user;
     }
+  }
+
+  async findEmail() {
+    const users = this.userRepo.find({ select: { email: true } });
+    if(!users){
+      throw new NotFoundException('No existe un usaurio con ese correo')
+    }
+    return users;
   }
 
   async findOne(id: number) {

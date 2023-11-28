@@ -9,9 +9,11 @@ import { SolicitudDeCompraModule } from '../solicitud-de-compra/solicitud-de-com
 @Module({
   imports: [
     TypeOrmModule.forFeature([Solicitud]),
-    IngredientsModule,SolicitudDeCompraModule],
+    IngredientsModule,
+    SolicitudDeCompraModule,
+  ],
   controllers: [SolicitudController],
   providers: [SolicitudService],
-  exports: [SolicitudService]
+  exports: [SolicitudService],
 })
 export class SolicitudModule {}

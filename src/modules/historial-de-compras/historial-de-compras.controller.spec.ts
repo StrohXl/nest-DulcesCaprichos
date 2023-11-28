@@ -11,7 +11,9 @@ describe('HistorialDeComprasController', () => {
       providers: [HistorialDeComprasService],
     }).compile();
 
-    controller = module.get<HistorialDeComprasController>(HistorialDeComprasController);
+    controller = module.get<HistorialDeComprasController>(
+      HistorialDeComprasController,
+    );
   });
 
   it('should be defined', () => {

@@ -13,11 +13,12 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { ConfirmUser } from './entities/confirm-user.entity';
 import { Repository } from 'typeorm';
 import * as nodemailer from 'nodemailer';
-import { nanoid } from 'nanoid';
+import { nanoid, customAlphabet } from 'nanoid';
 import { Email } from '../../components/email';
 import * as bcrypt from 'bcrypt';
 import { ConfirmEmail } from './dto/send-email-user.dto';
 import { UserService } from '../user/user.service';
+import { url } from 'inspector';
 
 @Injectable()
 export class ConfirmUserService {
@@ -79,7 +80,10 @@ export class ConfirmUserService {
   }
 
   async sendEmail(email: string) {
-    const token: string = nanoid(5);
+    const alphabet =
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const genereateToken = customAlphabet(alphabet, 5);
+    const token: string = genereateToken();
     const newToken: string[] = token.split('');
     const config = {
       host: 'smtp.gmail.com',
@@ -92,8 +96,7 @@ export class ConfirmUserService {
     const emailData = {
       from: 'contacto@carhood.co',
       to: email,
-      subject: 'Oportunidad desde Carhood',
-      text: 'epale',
+      subject: 'NestXm',
       html: Email(
         newToken[0],
         newToken[1],
@@ -104,12 +107,15 @@ export class ConfirmUserService {
     };
     const transport = nodemailer.createTransport(config);
     try {
-      await transport.sendMail(emailData);
+      const res = await transport.sendMail(emailData);
+      console.log(res);
       return token;
     } catch (error) {
+      console.log('no funciona');
       console.log(error);
       throw new HttpException(
         'Error de conexion',
+
         HttpStatus.SERVICE_UNAVAILABLE,
       );
     }
@@ -136,7 +142,7 @@ export class ConfirmUserService {
     confirmUser.token = token;
     this.confirmUserRepo.save(confirmUser);
     return new HttpException(
-      { message: 'Se ha enviado un email a su correo'},
+      { message: 'Se ha enviado un email a su correo' },
       HttpStatus.OK,
     );
   }

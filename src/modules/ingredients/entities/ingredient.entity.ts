@@ -26,7 +26,7 @@ export class Ingredient {
   @Column({
     type: 'varchar',
     length: 200,
-    default: ''
+    default: '',
   })
   description: string;
 

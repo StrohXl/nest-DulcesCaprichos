@@ -28,14 +28,13 @@ export class ProductService {
     return this.productRepo.save(newProduct);
   }
 
-
   async createReceta(ingredients: IngredientsQuantity[]) {
     const promises = ingredients.map(async (item, index) => {
       return await this.iuService.create(ingredients[index]);
     });
     return await Promise.all(promises);
   }
-  
+
   async createPrice(receta: IngredientUsage[]) {
     let price = 0;
     receta.forEach((i) => {

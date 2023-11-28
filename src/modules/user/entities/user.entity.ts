@@ -31,7 +31,7 @@ export class User {
   money: number;
 
   @OneToMany(() => SolicitudDeCompra, (solicitud) => solicitud.user)
-  @JoinColumn({name:'solicitudes_de_compra'})
+  @JoinColumn({ name: 'solicitudes_de_compra' })
   solicitudesDeCompra: SolicitudDeCompra[];
 
   @Exclude()

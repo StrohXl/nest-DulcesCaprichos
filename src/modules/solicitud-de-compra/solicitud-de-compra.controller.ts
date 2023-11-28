@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SolicitudDeCompraService } from './solicitud-de-compra.service';
 import { CreateSolicitudDeCompraDto } from './dto/create-solicitud-de-compra.dto';
 import { UpdateSolicitudDeCompraDto } from './dto/update-solicitud-de-compra.dto';
 
 @Controller('solicitud-de-compra')
 export class SolicitudDeCompraController {
-  constructor(private readonly solicitudDeCompraService: SolicitudDeCompraService) {}
+  constructor(
+    private readonly solicitudDeCompraService: SolicitudDeCompraService,
+  ) {}
 
   @Post()
   create(@Body() createSolicitudDeCompraDto: CreateSolicitudDeCompraDto) {
@@ -23,8 +33,14 @@ export class SolicitudDeCompraController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSolicitudDeCompraDto: UpdateSolicitudDeCompraDto) {
-    return this.solicitudDeCompraService.update(+id, updateSolicitudDeCompraDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateSolicitudDeCompraDto: UpdateSolicitudDeCompraDto,
+  ) {
+    return this.solicitudDeCompraService.update(
+      +id,
+      updateSolicitudDeCompraDto,
+    );
   }
 
   @Delete(':id')

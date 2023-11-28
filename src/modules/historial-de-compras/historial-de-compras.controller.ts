@@ -1,11 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { HistorialDeComprasService } from './historial-de-compras.service';
 import { CreateHistorialDeCompraDto } from './dto/create-historial-de-compra.dto';
 import { UpdateHistorialDeCompraDto } from './dto/update-historial-de-compra.dto';
 
 @Controller('historial-de-compras')
 export class HistorialDeComprasController {
-  constructor(private readonly historialDeComprasService: HistorialDeComprasService) {}
+  constructor(
+    private readonly historialDeComprasService: HistorialDeComprasService,
+  ) {}
 
   @Post()
   create(@Body() createHistorialDeCompraDto: CreateHistorialDeCompraDto) {
@@ -23,8 +33,14 @@ export class HistorialDeComprasController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistorialDeCompraDto: UpdateHistorialDeCompraDto) {
-    return this.historialDeComprasService.update(+id, updateHistorialDeCompraDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateHistorialDeCompraDto: UpdateHistorialDeCompraDto,
+  ) {
+    return this.historialDeComprasService.update(
+      +id,
+      updateHistorialDeCompraDto,
+    );
   }
 
   @Delete(':id')

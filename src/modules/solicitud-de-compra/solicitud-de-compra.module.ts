@@ -9,9 +9,9 @@ import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([SolicitudDeCompra,User]),
+    TypeOrmModule.forFeature([SolicitudDeCompra, User]),
     forwardRef(() => SolicitudModule),
-    UserModule
+    UserModule,
   ],
   controllers: [SolicitudDeCompraController],
   providers: [SolicitudDeCompraService],
