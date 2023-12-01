@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException, Param } from '@nestjs/common';
 import {
   CreateProductDto,
   IngredientsQuantity,
@@ -61,5 +61,8 @@ export class ProductService {
     await this.findOne(id);
     this.productRepo.delete(id);
     return `This action removes a #${id} product`;
+  }
+  async update(id: number, body: UpdateProductDto) {
+    return 'actualizado';
   }
 }
