@@ -778,7 +778,9 @@ box-shadow: 0 5px 10px #00000057;
             <tr style="display: flex; align-items: center; padding: 5px 20px;height:30px">
               <td align="left" style="display: flex; align-items: center;text-align: left;">
 
-                <a target="_blank" href="${process.env.URL_FRONT + '/sign-in'}">                
+                <a target="_blank" href="${
+                  process.env.URL_FRONT + '/sign-in'
+                }">                
                   <img alt="inicio" title="inicio" style="height: 30px;" src="https://img.icons8.com/?size=256&id=86527&format=png&color=FFFFFF">
                 </a> 
               </td>

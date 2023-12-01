@@ -756,7 +756,9 @@ export const ConfirmToken = (
             <tr style="display: flex; align-items: center; padding: 5px 20px;height:30px">
               <td align="left" style="display: flex; align-items: center;text-align: left;">
 
-                <a target="_blank" href="href="${process.env.URL_FRONT + '/sign-in'}">                
+                <a target="_blank" href="href="${
+                  process.env.URL_FRONT + '/sign-in'
+                }">                
                   <img title="inicio" alt="inicio" style="height: 30px;" src="https://img.icons8.com/?size=256&id=86527&format=png&color=FFFFFF">
                 </a> 
               </td>

@@ -9,7 +9,6 @@ import { User } from '../user/entities/user.entity';
 import 'dotenv/config';
 import { JwtModule } from '@nestjs/jwt';
 
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([ConfirmUser, User]),

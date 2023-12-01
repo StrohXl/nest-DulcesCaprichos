@@ -20,7 +20,7 @@ export class LoginService {
   ) {}
   async login(user: LoginDto) {
     const userLogin = await this.findUser(user);
-    const payload: any = { sub: userLogin.id};
+    const payload: any = { sub: userLogin.id };
     const token = this.jwt.sign(payload);
     return new HttpException(
       { token, message: 'Usuario conectado' },

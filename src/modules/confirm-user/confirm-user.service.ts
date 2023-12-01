@@ -14,7 +14,7 @@ import { customAlphabet } from 'nanoid';
 import { ConfirmToken } from '../../emails/confirmToken';
 import { RecoveryPassword } from '../../emails/recoveryPassword';
 import * as bcrypt from 'bcrypt';
-import {JwtService} from '@nestjs/jwt'
+import { JwtService } from '@nestjs/jwt';
 import { ConfirmEmail } from './dto/send-email-user.dto';
 import { UserService } from '../user/user.service';
 import { Email } from '../user/dto/email-user.dto';
@@ -127,8 +127,8 @@ export class ConfirmUserService {
 
   async recoveryPassword(email: Email) {
     const res = await this.userService.findEmailOne(email.email, 'search');
-    const payload: any = {sub: res.id}
-    const jwt = this.jwt.sign(payload)
+    const payload: any = { sub: res.id };
+    const jwt = this.jwt.sign(payload);
     const token = await this.sendEmail(res.email, 'recovery');
     return new HttpException(
       { message: 'Se ha enviado un email a su correo', token, jwt },
@@ -154,7 +154,7 @@ export class ConfirmUserService {
   async update(id: number) {
     const confirmUser = await this.findOne(id);
     const email = confirmUser.email;
-    const token = await this.sendEmail(email,'create');
+    const token = await this.sendEmail(email, 'create');
     confirmUser.token = token;
     this.confirmUserRepo.save(confirmUser);
     return new HttpException(
