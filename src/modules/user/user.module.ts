@@ -4,6 +4,7 @@ import { UserController } from './user.controller';
 import { User } from './entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { JwtModule } from '@nestjs/jwt';
+import { IngredientsModule } from '../ingredients/ingredients.module';
 
 @Module({
   imports: [
@@ -18,6 +19,8 @@ import { JwtModule } from '@nestjs/jwt';
         };
       },
     }),
+    forwardRef(()=>IngredientsModule)
+    
   ],
   controllers: [UserController],
   providers: [UserService],

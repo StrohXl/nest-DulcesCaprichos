@@ -7,9 +7,11 @@ import {
   UpdateDateColumn,
   OneToMany,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { IngredientUsage } from '../../ingredient-usage/entities/ingredient-usage.entity';
 import { Solicitud } from '../../solicitud/entities/solicitud.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
 export class Ingredient {
@@ -19,7 +21,6 @@ export class Ingredient {
   @Column({
     type: 'varchar',
     length: 100,
-    unique: true,
   })
   name: string;
 
@@ -32,6 +33,9 @@ export class Ingredient {
 
   @Column({ type: 'int' })
   price: number;
+
+  @ManyToOne(() => User)
+  user: User;
 
   @OneToMany(
     () => IngredientUsage,

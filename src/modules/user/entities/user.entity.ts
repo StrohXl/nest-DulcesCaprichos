@@ -9,6 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { SolicitudDeCompra } from '../../solicitud-de-compra/entities/solicitud-de-compra.entity';
+import { Ingredient } from '../../ingredients/entities/ingredient.entity';
 
 @Entity()
 export class User {
@@ -29,6 +30,9 @@ export class User {
 
   @Column({ type: 'int', default: 1000 })
   money: number;
+
+  @OneToMany(() => Ingredient, (ingredients) => ingredients.user)
+  ingredients: Ingredient[];
 
   @OneToMany(() => SolicitudDeCompra, (solicitud) => solicitud.user)
   @JoinColumn({ name: 'solicitudes_de_compra' })
