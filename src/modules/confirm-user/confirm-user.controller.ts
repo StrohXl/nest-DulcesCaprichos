@@ -10,6 +10,7 @@ import {
 import { ConfirmUserService } from './confirm-user.service';
 import { CreateConfirmUserDto } from './dto/create-confirm-user.dto';
 import { ConfirmEmail } from './dto/send-email-user.dto';
+import { Email } from '../user/dto/email-user.dto';
 
 @Controller('confirm-user')
 export class ConfirmUserController {
@@ -18,6 +19,11 @@ export class ConfirmUserController {
   @Post('/send-email')
   create(@Body() body: ConfirmEmail) {
     return this.confirmUserService.create(body);
+  }
+
+  @Post('/recovery-password')
+  recoveryPassword(@Body() email: Email) {
+    return this.confirmUserService.recoveryPassword(email);
   }
 
   @Post()

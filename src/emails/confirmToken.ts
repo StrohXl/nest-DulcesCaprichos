@@ -1,4 +1,4 @@
-export const Email = (
+export const ConfirmToken = (
   value1: string,
   value2: string,
   value3: string,
@@ -756,8 +756,8 @@ export const Email = (
             <tr style="display: flex; align-items: center; padding: 5px 20px;height:30px">
               <td align="left" style="display: flex; align-items: center;text-align: left;">
 
-                <a target="_blank" href="https://www.linkedin.com/in/xavier-mayora-083874255/">                
-                  <img style="height: 30px;" src="https://img.icons8.com/?size=256&id=86527&format=png&color=FFFFFF">
+                <a target="_blank" href="href="${process.env.URL_FRONT + '/sign-in'}">                
+                  <img title="inicio" alt="inicio" style="height: 30px;" src="https://img.icons8.com/?size=256&id=86527&format=png&color=FFFFFF">
                 </a> 
               </td>
               <td style="width:100%"></td>
@@ -766,7 +766,7 @@ export const Email = (
                         <img style="height: 30px;" src="https://img.icons8.com/?size=50&id=8808&format=png&color=FFFFFF" alt="linkedin" title="linkedin">
                     </a>
                     <a target="_blank" href="https://github.com/StrohXl">
-                       <img style="height: 30px; margin-left: .5em;" src="https://img.icons8.com/?size=48&id=wqGmdISvpm0c&format=png&color=FFFFFF" alt="linkedin" title="linkedin">
+                       <img style="height: 30px; margin-left: .5em;" src="https://img.icons8.com/?size=48&id=wqGmdISvpm0c&format=png&color=FFFFFF" alt="github" title="github">
                      </a>
                  </td>
             </tr>

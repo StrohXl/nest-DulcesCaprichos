@@ -11,10 +11,13 @@ import { ConfirmUser } from './entities/confirm-user.entity';
 import { Repository } from 'typeorm';
 import * as nodemailer from 'nodemailer';
 import { customAlphabet } from 'nanoid';
-import { Email } from '../../components/email';
+import { ConfirmToken } from '../../emails/confirmToken';
+import { RecoveryPassword } from '../../emails/recoveryPassword';
 import * as bcrypt from 'bcrypt';
+import {JwtService} from '@nestjs/jwt'
 import { ConfirmEmail } from './dto/send-email-user.dto';
 import { UserService } from '../user/user.service';
+import { Email } from '../user/dto/email-user.dto';
 
 @Injectable()
 export class ConfirmUserService {
@@ -22,6 +25,7 @@ export class ConfirmUserService {
     @InjectRepository(ConfirmUser)
     private confirmUserRepo: Repository<ConfirmUser>,
     private userService: UserService,
+    private jwt: JwtService,
   ) {}
 
   async create(createConfirmUserDto: ConfirmEmail) {
@@ -29,7 +33,7 @@ export class ConfirmUserService {
     const email = createConfirmUserDto.email;
 
     // Obtengo el token enviado al correo
-    const token = await this.sendEmail(email);
+    const token = await this.sendEmail(email, 'create');
 
     // Verifico si existe un usuario con ese correo y en caso de existir borrarlo
     const user = await this.confirmUserRepo.findOne({
@@ -66,6 +70,7 @@ export class ConfirmUserService {
       };
       // Creamos el usuario al confirmar el token
       await this.userService.create(user);
+      console.log('funciona');
       return {
         ...solicitud,
         message: 'Codigo confirmado',
@@ -73,7 +78,7 @@ export class ConfirmUserService {
     }
   }
 
-  async sendEmail(email: string) {
+  async sendEmail(email: string, type: string) {
     const alphabet =
       '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const genereateToken = customAlphabet(alphabet, 5);
@@ -91,28 +96,44 @@ export class ConfirmUserService {
       from: 'contacto@carhood.co',
       to: email,
       subject: 'NestXm',
-      html: Email(
-        newToken[0],
-        newToken[1],
-        newToken[2],
-        newToken[3],
-        newToken[4],
-      ),
+      html:
+        type === 'create'
+          ? ConfirmToken(
+              newToken[0],
+              newToken[1],
+              newToken[2],
+              newToken[3],
+              newToken[4],
+            )
+          : RecoveryPassword(
+              newToken[0],
+              newToken[1],
+              newToken[2],
+              newToken[3],
+              newToken[4],
+            ),
     };
     const transport = nodemailer.createTransport(config);
     try {
       const res = await transport.sendMail(emailData);
-      console.log(res);
       return token;
     } catch (error) {
-      console.log('no funciona');
-      console.log(error);
       throw new HttpException(
         'Error de conexion',
-
         HttpStatus.SERVICE_UNAVAILABLE,
       );
     }
+  }
+
+  async recoveryPassword(email: Email) {
+    const res = await this.userService.findEmailOne(email.email, 'search');
+    const payload: any = {sub: res.id}
+    const jwt = this.jwt.sign(payload)
+    const token = await this.sendEmail(res.email, 'recovery');
+    return new HttpException(
+      { message: 'Se ha enviado un email a su correo', token, jwt },
+      HttpStatus.OK,
+    );
   }
 
   findAll() {
@@ -121,6 +142,7 @@ export class ConfirmUserService {
 
   async findOne(id: number) {
     const confirmUser = await this.confirmUserRepo.findOne({ where: { id } });
+    console.log(confirmUser);
     if (!confirmUser) {
       throw new NotFoundException(
         `Usuario por confirmar con el id #${id} no existe`,
@@ -132,7 +154,7 @@ export class ConfirmUserService {
   async update(id: number) {
     const confirmUser = await this.findOne(id);
     const email = confirmUser.email;
-    const token = await this.sendEmail(email);
+    const token = await this.sendEmail(email,'create');
     confirmUser.token = token;
     this.confirmUserRepo.save(confirmUser);
     return new HttpException(

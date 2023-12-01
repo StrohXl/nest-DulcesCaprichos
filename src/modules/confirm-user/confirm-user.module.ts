@@ -6,9 +6,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from '../user/user.module';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
+import 'dotenv/config';
+import { JwtModule } from '@nestjs/jwt';
+
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ConfirmUser, User]), UserModule],
+  imports: [
+    TypeOrmModule.forFeature([ConfirmUser, User]),
+    UserModule,
+    JwtModule.registerAsync({
+      useFactory: () => {
+        return {
+          secret: process.env.SECRET_JWT,
+          signOptions: {
+            expiresIn: '1d',
+          },
+        };
+      },
+    }),
+  ],
   controllers: [ConfirmUserController],
   providers: [ConfirmUserService, UserService],
 })

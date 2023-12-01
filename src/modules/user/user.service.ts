@@ -9,6 +9,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { FindOptionsWhere, In, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -36,12 +37,10 @@ export class UserService {
     if (typeFunction === 'create') {
       if (user) {
         throw new ConflictException('Ya existe un usuario con ese email');
-      } else {
-        throw new NotFoundException('El usuario con ese email no se encuentra');
       }
     } else {
       if (!user) {
-        throw new NotFoundException('El usuario con ese email no se encuentra');
+        throw new NotFoundException('No existe un usuario con ese Email');
       }
       return user;
     }
@@ -49,9 +48,6 @@ export class UserService {
 
   async findEmail() {
     const users = this.userRepo.find({ select: { email: true } });
-    if (!users) {
-      throw new NotFoundException('No existe un usaurio con ese correo');
-    }
     return users;
   }
 
@@ -66,6 +62,7 @@ export class UserService {
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
     this.userRepo.merge(user, updateUserDto);
+    user.password = await bcrypt.hash(user.password, 10);
     return this.userRepo.save(user);
   }
 
