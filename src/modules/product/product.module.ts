@@ -8,6 +8,8 @@ import { IngredientsService } from '../ingredients/ingredients.service';
 import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.entity';
 import { IngredientUsageService } from '../ingredient-usage/ingredient-usage.service';
 import { JwtModule } from '@nestjs/jwt';
+import { UserModule } from '../user/user.module';
+import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { JwtModule } from '@nestjs/jwt';
         };
       },
     }),
+    UserModule,
   ],
   controllers: [ProductController],
   providers: [ProductService, IngredientsService, IngredientUsageService],

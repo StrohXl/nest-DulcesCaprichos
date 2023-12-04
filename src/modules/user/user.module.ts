@@ -4,11 +4,12 @@ import { UserController } from './user.controller';
 import { User } from './entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { JwtModule } from '@nestjs/jwt';
-import { IngredientsModule } from '../ingredients/ingredients.module';
+import { Ingredient } from '../ingredients/entities/ingredient.entity';
+import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Ingredient, IngredientUsage]),
     JwtModule.registerAsync({
       useFactory: () => {
         return {
@@ -19,8 +20,6 @@ import { IngredientsModule } from '../ingredients/ingredients.module';
         };
       },
     }),
-    forwardRef(()=>IngredientsModule)
-    
   ],
   controllers: [UserController],
   providers: [UserService],

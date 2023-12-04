@@ -52,7 +52,10 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    const user = await this.userRepo.findOne({ where: { id } });
+    const user = await this.userRepo.findOne({
+      where: { id },
+      relations: { ingredients: true, solicitudesDeCompra: true },
+    });
     if (!user) {
       throw new NotFoundException(`User #${id} is not founc`);
     }
@@ -72,5 +75,18 @@ export class UserService {
       throw new BadRequestException('no se encuentra el usuario');
     }
     return this.userRepo.delete(id);
+  }
+
+  //Ingredients User
+
+  async findIngredientsUser(id: number) {
+    const user = await this.findOne(id);
+    return user.ingredients;
+  }
+  //Ingredients User
+
+  async findSolicitudesUser(id: number) {
+    const user = await this.findOne(id);
+    return user.solicitudesDeCompra;
   }
 }

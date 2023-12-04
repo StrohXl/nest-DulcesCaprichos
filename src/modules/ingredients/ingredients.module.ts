@@ -10,10 +10,12 @@ import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.e
 import { JwtModule } from '@nestjs/jwt';
 import { forwardRef } from '@nestjs/common/utils';
 import { UserModule } from '../user/user.module';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Ingredient, Product, IngredientUsage]),
+    TypeOrmModule.forFeature([Ingredient, Product, IngredientUsage, User]),
     IngredientUsageModule,
     JwtModule.registerAsync({
       useFactory: () => {
@@ -25,10 +27,10 @@ import { UserModule } from '../user/user.module';
         };
       },
     }),
-    UserModule
+    UserModule,
   ],
   controllers: [IngredientsController],
-  providers: [IngredientsService, ProductService],
+  providers: [IngredientsService, ProductService, UserService],
   exports: [IngredientsService],
 })
 export class IngredientsModule {}

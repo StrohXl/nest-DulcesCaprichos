@@ -9,21 +9,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Ingredient } from './entities/ingredient.entity';
 import { In } from 'typeorm';
 import { Repository } from 'typeorm';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class IngredientsService {
   constructor(
     @InjectRepository(Ingredient)
     private ingredientRepo: Repository<Ingredient>,
+    private userService: UserService,
   ) {}
   async create(createIngredientDto: CreateIngredientDto) {
-    await this.findByName(createIngredientDto.name);
+    const user = await this.userService.findOne(createIngredientDto.idUser);
     const newIngredient = await this.ingredientRepo.create(createIngredientDto);
+    newIngredient.user = user;
     return this.ingredientRepo.save(newIngredient);
   }
 
   findAll() {
-    return this.ingredientRepo.find({ relations: { solicitudes: true } });
+    return this.ingredientRepo.find({
+      relations: { solicitudes: true, user: true },
+    });
   }
 
   async findOne(id: number) {
@@ -64,10 +69,12 @@ export class IngredientsService {
 
   async update(id: number, updateIngredientDto: UpdateIngredientDto) {
     const ingredient = await this.findOne(id);
+
     this.ingredientRepo.merge(ingredient, updateIngredientDto);
     //Comprobar si se cambio el precio del ingrediente
-    if (updateIngredientDto.price) {
-      return ingredient;
+    if (updateIngredientDto.idUser) {
+      const user = await this.userService.findOne(updateIngredientDto.idUser);
+      ingredient.user = user;
     }
     return this.ingredientRepo.save(ingredient);
   }

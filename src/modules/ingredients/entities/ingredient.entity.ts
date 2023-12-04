@@ -34,7 +34,7 @@ export class Ingredient {
   @Column({ type: 'int' })
   price: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.ingredients)
   user: User;
 
   @OneToMany(

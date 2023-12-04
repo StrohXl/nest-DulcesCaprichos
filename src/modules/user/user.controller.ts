@@ -50,4 +50,19 @@ export class UserController {
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  // Ingredients
+
+  @UseGuards(AuthGuard)
+  @Get('/:id/ingredients')
+  findIngredientsUser(@Param('id') id: number) {
+    return this.userService.findIngredientsUser(id);
+  }
+
+  // Solicitudes de compra
+  @UseGuards(AuthGuard)
+  @Get('/:id/solicitud-de-compra')
+  findSolicitudesDeCompraUser(@Param('id') id: number) {
+    return this.userService.findSolicitudesUser(id);
+  }
 }
