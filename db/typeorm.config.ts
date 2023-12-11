@@ -1,7 +1,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import 'dotenv/config';
+
 dotenvConfig({ path: '.env' });
 const config = {
   type: 'postgres',
@@ -10,14 +10,8 @@ const config = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [
-    `./src/modules/*/entities/*entity.${
-      process.env.DEPLOY_SERVER == 'dev' ? 'js' : 'ts'
-    }`,
-  ],
-  migrations: [
-    `./db/migrations/*.${process.env.DEPLOY_SERVER == 'dev' ? 'js' : 'ts'}`,
-  ],
+  entities: ['./src/modules/*/entities/*entity.js'],
+  migrations: ['./db/migrations/*.js'],
   autoLoadEntities: true,
   synchronize: true,
 };
