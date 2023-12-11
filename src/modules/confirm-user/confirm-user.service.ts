@@ -29,6 +29,8 @@ export class ConfirmUserService {
   ) {}
 
   async create(createConfirmUserDto: ConfirmEmail) {
+    await this.userService.findEmailOne(createConfirmUserDto.email, 'create');
+
     // Obtengo el correo del cuerpo de la solicitud
     const email = createConfirmUserDto.email;
 
@@ -36,11 +38,11 @@ export class ConfirmUserService {
     const token = await this.sendEmail(email, 'create');
 
     // Verifico si existe un usuario con ese correo y en caso de existir borrarlo
-    const user = await this.confirmUserRepo.findOne({
+    const confirmUser = await this.confirmUserRepo.findOne({
       where: { email },
     });
-    if (user) {
-      await this.confirmUserRepo.delete(user.id);
+    if (confirmUser) {
+      await this.confirmUserRepo.delete(confirmUser.id);
     }
 
     // Creo al nuevo usuario por confirmar
@@ -70,7 +72,6 @@ export class ConfirmUserService {
       };
       // Creamos el usuario al confirmar el token
       await this.userService.create(user);
-      console.log('funciona');
       return {
         ...solicitud,
         message: 'Codigo confirmado',

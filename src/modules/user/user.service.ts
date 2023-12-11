@@ -74,7 +74,8 @@ export class UserService {
     if (!user) {
       throw new BadRequestException('no se encuentra el usuario');
     }
-    return this.userRepo.delete(id);
+    this.userRepo.delete(id);
+    return 'Usuario Eliminado exitosamente';
   }
 
   //Ingredients User

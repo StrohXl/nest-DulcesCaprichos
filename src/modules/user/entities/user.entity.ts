@@ -31,7 +31,9 @@ export class User {
   @Column({ type: 'int', default: 1000 })
   money: number;
 
-  @OneToMany(() => Ingredient, (ingredients) => ingredients.user)
+  @OneToMany(() => Ingredient, (ingredients) => ingredients.user, {
+    onDelete: 'CASCADE',
+  })
   ingredients: Ingredient[];
 
   @OneToMany(() => SolicitudDeCompra, (solicitud) => solicitud.user)

@@ -34,7 +34,7 @@ export class Ingredient {
   @Column({ type: 'int' })
   price: number;
 
-  @ManyToOne(() => User, (user) => user.ingredients)
+  @ManyToOne(() => User, (user) => user.ingredients, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(
