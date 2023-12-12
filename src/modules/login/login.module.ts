@@ -14,7 +14,7 @@ import 'dotenv/config';
         return {
           secret: process.env.SECRET_JWT,
           signOptions: {
-            expiresIn: '1d',
+            expiresIn: '1000d',
           },
         };
       },
