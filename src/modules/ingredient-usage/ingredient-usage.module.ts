@@ -9,6 +9,7 @@ import { Product } from '../product/entities/product.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { User } from '../user/entities/user.entity';
 import { UserModule } from '../user/user.module';
+import { FilesModule } from '../files/files.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserModule } from '../user/user.module';
       },
     }),
     UserModule,
+    FilesModule,
   ],
   controllers: [IngredientUsageController],
   providers: [IngredientUsageService, IngredientsService],

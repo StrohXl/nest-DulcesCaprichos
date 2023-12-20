@@ -116,7 +116,7 @@ export class ConfirmUserService {
     };
     const transport = nodemailer.createTransport(config);
     try {
-      const res = await transport.sendMail(emailData);
+      await transport.sendMail(emailData);
       return token;
     } catch (error) {
       throw new HttpException(

@@ -37,6 +37,9 @@ export class Ingredient {
   @ManyToOne(() => User, (user) => user.ingredients, { onDelete: 'CASCADE' })
   user: User;
 
+  @Column({ type: 'varchar', default: '' })
+  imageUrl: string;
+
   @OneToMany(
     () => IngredientUsage,
     (ingredientUsage) => ingredientUsage.ingredient,

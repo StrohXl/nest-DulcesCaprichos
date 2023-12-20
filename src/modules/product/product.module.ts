@@ -10,6 +10,7 @@ import { IngredientUsageService } from '../ingredient-usage/ingredient-usage.ser
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
 import { User } from '../user/entities/user.entity';
+import { FilesModule } from '../files/files.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { User } from '../user/entities/user.entity';
       },
     }),
     UserModule,
+    FilesModule,
   ],
   controllers: [ProductController],
   providers: [ProductService, IngredientsService, IngredientUsageService],

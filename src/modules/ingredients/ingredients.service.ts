@@ -3,13 +3,17 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateIngredientDto } from './dto/create-ingredient.dto';
+import {
+  CreateIngredientDto,
+  uploadImageIngredientDto,
+} from './dto/create-ingredient.dto';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ingredient } from './entities/ingredient.entity';
 import { In } from 'typeorm';
 import { Repository } from 'typeorm';
 import { UserService } from '../user/user.service';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export class IngredientsService {
@@ -17,11 +21,14 @@ export class IngredientsService {
     @InjectRepository(Ingredient)
     private ingredientRepo: Repository<Ingredient>,
     private userService: UserService,
+    private filesService: FilesService,
   ) {}
-  async create(createIngredientDto: CreateIngredientDto) {
-    const user = await this.userService.findOne(createIngredientDto.idUser);
-    const newIngredient = await this.ingredientRepo.create(createIngredientDto);
+  async create(body: CreateIngredientDto, image: uploadImageIngredientDto) {
+    const user = await this.userService.findOne(body.idUser);
+    const imageUrl = await this.filesService.uploadImage(image);
+    const newIngredient = await this.ingredientRepo.create(body);
     newIngredient.user = user;
+    newIngredient.imageUrl = imageUrl;
     return this.ingredientRepo.save(newIngredient);
   }
 
@@ -67,20 +74,29 @@ export class IngredientsService {
     }
   }
 
-  async update(id: number, updateIngredientDto: UpdateIngredientDto) {
+  async update(
+    id: number,
+    updateIngredientDto: UpdateIngredientDto,
+    image: uploadImageIngredientDto,
+  ) {
     const ingredient = await this.findOne(id);
-
     this.ingredientRepo.merge(ingredient, updateIngredientDto);
     //Comprobar si se cambio el precio del ingrediente
     if (updateIngredientDto.idUser) {
       const user = await this.userService.findOne(updateIngredientDto.idUser);
       ingredient.user = user;
     }
+    if (image) {
+      const newUrl = await this.filesService.update(image, ingredient.imageUrl);
+      ingredient.imageUrl = newUrl;
+    }
     return this.ingredientRepo.save(ingredient);
   }
 
   async remove(id: number) {
-    await this.findOne(id);
+    const ingredient = await this.findOne(id);
+    const urlImage = ingredient.imageUrl;
+    await this.filesService.remove(urlImage);
     return this.ingredientRepo.delete(id);
   }
 }

@@ -7,9 +7,16 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
-import { CreateIngredientDto } from './dto/create-ingredient.dto';
+import {
+  CreateIngredientDto,
+  uploadImageIngredientDto,
+} from './dto/create-ingredient.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { AuthGuard } from '../auth/guards/jwt.guard';
 
@@ -19,8 +26,15 @@ export class IngredientsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createIngredientDto: CreateIngredientDto) {
-    return this.ingredientsService.create(createIngredientDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async create(
+    @UploadedFile() image: uploadImageIngredientDto,
+    @Body() body: CreateIngredientDto,
+  ) {
+    if (!image) {
+      throw new BadRequestException('Image required');
+    }
+    return this.ingredientsService.create(body, image);
   }
 
   @Get()
@@ -35,11 +49,13 @@ export class IngredientsController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('image'))
   update(
-    @Param('id') id: string,
+    @Param('id') id: number,
+    @UploadedFile() image: uploadImageIngredientDto,
     @Body() updateIngredientDto: UpdateIngredientDto,
   ) {
-    return this.ingredientsService.update(+id, updateIngredientDto);
+    return this.ingredientsService.update(id, updateIngredientDto, image);
   }
 
   @UseGuards(AuthGuard)

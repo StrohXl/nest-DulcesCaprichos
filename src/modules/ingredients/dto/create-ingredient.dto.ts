@@ -4,7 +4,9 @@ import {
   IsNotEmpty,
   IsPositive,
   IsOptional,
+  IsDefined,
 } from 'class-validator';
+import { Multer } from 'multer';
 export class CreateIngredientDto {
   @IsNotEmpty()
   @IsPositive()
@@ -23,4 +25,10 @@ export class CreateIngredientDto {
   @IsString()
   @IsOptional()
   description?: string;
+}
+
+export class uploadImageIngredientDto {
+  @IsDefined()
+  @IsNotEmpty()
+  image: Multer.File;
 }

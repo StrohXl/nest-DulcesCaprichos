@@ -12,11 +12,11 @@ import { forwardRef } from '@nestjs/common/utils';
 import { UserModule } from '../user/user.module';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
+import { FilesModule } from '../files/files.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Ingredient, Product, IngredientUsage, User]),
-    IngredientUsageModule,
     JwtModule.registerAsync({
       useFactory: () => {
         return {
@@ -27,7 +27,9 @@ import { User } from '../user/entities/user.entity';
         };
       },
     }),
+    IngredientUsageModule,
     UserModule,
+    FilesModule,
   ],
   controllers: [IngredientsController],
   providers: [IngredientsService, ProductService, UserService],

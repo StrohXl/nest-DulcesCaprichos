@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import 'dotenv/config';
 import { SolicitudModule } from './modules/solicitud/solicitud.module';
 import { SolicitudDeCompraModule } from './modules/solicitud-de-compra/solicitud-de-compra.module';
+import { FilesModule } from './modules/files/files.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SolicitudDeCompraModule } from './modules/solicitud-de-compra/solicitud
     AuthModule,
     SolicitudModule,
     SolicitudDeCompraModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
