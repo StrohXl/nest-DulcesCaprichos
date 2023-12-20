@@ -1,12 +1,13 @@
 {
   "type": "service_account",
-  "project_id": "your-project-id",
-  "private_key_id": "your-private-key-id",
-  "private_key": "your-private-key",
-  "client_email": "your-client-email",
-  "client_id": "your-client-id",
+  "project_id": "nestxmdev",
+  "private_key_id": "44c467b56133e3bf9716f16def0672b1994330ea",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC3hEU1QvEVmzWZ\nb+6nwEZruYTnYvLlOfmOIKbfVXH/UwLG6OkjGBGfJdEH7VmbBChZJ1yP33J3y4dx\nMBRG+pcG3+sr9qrmb/rviOFyS4e8iUEQmebgyG+jEtaSSTPYUaFBxa2jvuW+ymCW\nq4y67lVvu9OUZ475fAQ+MM/UypWmpGXUiR1BIGfbw7nD5mIbLZ1jm//8gBmppiUD\nQ8DMZ+xIwLWloJZGtsXwcIk9Y1KsgWwxohBLNj56Zlzw3W39DG9qANbs0C0H7xcC\nWtxNnchwnzFQPWaDlWg54Hg0fTDlBhpXzn2VvmIyxZPyOr8FwG54ghXUpg3mjX91\n4dnXFjbrAgMBAAECggEAPmGmeu/p7pvHcQRk/j30UisKe/MdOQFnjMIZp2IusYmA\nsKe8lDLazpv2vbiXVIPpyUCBjOB6UzFqtXWP9v64ttwH33ZmapWXGbSQWh9FoTeQ\n1/lQy4kmtaqyKKDckERTSf3NxBMgmqXFhoIDAQoCHcydo9098x2OfatvAljo3O+B\nvY15dq+giMXihq1D1vmi9Mglnv+uh2DU9PFPHlqIS0Rxc1im+GGqdeIOvWcsHa5n\nuFfrZiCYDAgOYIU8f6Ett6C5+Ug6J3WGZV9O3qndR6yP/dhUvjjM9UudfSC78Xw7\nxL/4BjAsZDHSFafS9GzhNsDiVOpt3PvY8++X7L/fwQKBgQD09PIk9kMSYeQXCxHo\nvZwChiusf3L90VCg4ktimvaNNLvmYnMXg0Cbpa89Osd+npaoNHobdzUwcVvbr0wk\nkTf8SRE240xEWIrRFq9Z+FMOie0GGNZ0FqED1tYqMxX12/1sHVPhybQxawL+n2cG\n1IgdpWCtUO6DMatuWMJBPq4qQQKBgQC/yj3woa5iGEQ0fuGUcTgoFAQc0nga4oRc\n3vdYMVfsBdALVhGEA8QXHjbRdd/VlZuBMquEzy2E042VMV57qFAa16OBPXW8KNS2\naUZHSOyoeVb4lhfrZGqBK/j47oaqIEMDinfLuF0+bBFRuzdR8FRx8nvT1cwRamqR\nf5NZx4GeKwKBgQCPQhG7fCqNvaJft6Gps/phn4Y7Q+5Ecv3smWvtJyO6QXUCr+EP\nhztpy+RIsu+pJaaGiOpA1d7Njf5i5IpreGJ9sV3X8+bOsdm9nr6+p3QrtI5iWnRR\nQEq6rBJka6wUNaxoZl6AVi6EGEmQEDl4zSMt82Iu+n4DTDEuP8qbzcSeAQKBgQCf\nWbYlHPD66BajV1iuMXPrONZB7E2GaPZ5A3iXekgG/r1g7d4XxdlDLAN3/WxA1dEi\ng6sm6cx0NCHK9/382FfWNZzQYPRVpcc22DlgOSMIx+iPGoY9Om2TbamriuOwrqV/\nZ6kpRsGSf8/UDK1mEzzWgBaKZ3Tqc3Sf91PCoJT9iQKBgAqgk9+bD4xOHxQLXxsZ\nNuECZJAf59Klo4+eKrAgA93mulJ50DsW1PEn6YFIsAN/tqDljxIfUrEbUF1WVE7H\n7ujivbjTy2FXZhLyy8YJKxPXqjHRFdeX3wabM+wtVMtlsK70GU9WkYdrMqBfQJt3\nQ0rg3bYPqMHcaPfT/ocTElzb\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-r17j7@nestxmdev.iam.gserviceaccount.com",
+  "client_id": "114527356125872265369",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/your-client-email"
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-r17j7%40nestxmdev.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
 }

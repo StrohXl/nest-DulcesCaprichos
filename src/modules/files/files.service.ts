@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import firebaseConfig from '../../firebase.config.json';
+import * as firebaseConfig from '../../firebase.config.json';
 import { Multer } from 'multer';
 import * as admin from 'firebase-admin';
 
 @Injectable()
 export class FilesService {
+  private serviceAccount = firebaseConfig as admin.ServiceAccount;
+  private admi = admin.initializeApp({
+    credential: admin.credential.cert(this.serviceAccount),
+  });
   async uploadImage(file: Multer.File) {
-    const serviceAccount = firebaseConfig as admin.ServiceAccount;
-    const admi = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-    });
-    const bucket = admi.storage().bucket('nestxmdev.appspot.com');
+    const bucket = this.admi.storage().bucket('nestxmdev.appspot.com');
     const timestamp = Date.now();
     const fileName = `images/image${timestamp}`;
     const fileUpload = bucket.file(fileName);
@@ -43,11 +43,7 @@ export class FilesService {
   }
 
   async remove(imageUrl: string) {
-    const serviceAccount = firebaseConfig as admin.ServiceAccount;
-    const admi = admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-    });
-    const bucket = admi.storage().bucket('nestxmdev.appspot.com');
+    const bucket = this.admi.storage().bucket('nestxmdev.appspot.com');
     const fileName = imageUrl.split('/').pop().split('?')[0];
     const file = bucket.file('images/' + fileName);
     return await file.delete();
