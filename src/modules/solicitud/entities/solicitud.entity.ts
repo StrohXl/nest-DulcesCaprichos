@@ -21,7 +21,9 @@ export class Solicitud {
   @Column({ type: 'int', default: 0 })
   price: number;
 
-  @ManyToOne(() => SolicitudDeCompra, (s) => s.solicitud)
+  @ManyToOne(() => SolicitudDeCompra, (s) => s.solicitud, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'solicitud_de_compra' })
   solicitudDeCompra: SolicitudDeCompra;
 

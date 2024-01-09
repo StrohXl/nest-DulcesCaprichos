@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import {
   CreateIngredientDto,
-  uploadImageIngredientDto,
+  uploadImageDto,
 } from './dto/create-ingredient.dto';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,7 +23,7 @@ export class IngredientsService {
     private userService: UserService,
     private filesService: FilesService,
   ) {}
-  async create(body: CreateIngredientDto, image: uploadImageIngredientDto) {
+  async create(body: CreateIngredientDto, image: uploadImageDto) {
     const user = await this.userService.findOne(body.idUser);
     const imageUrl = await this.filesService.uploadImage(image);
     const newIngredient = await this.ingredientRepo.create(body);
@@ -39,7 +39,10 @@ export class IngredientsService {
   }
 
   async findOne(id: number) {
-    const ingredient = await this.ingredientRepo.findOne({ where: { id } });
+    const ingredient = await this.ingredientRepo.findOne({
+      where: { id },
+      relations: { solicitudes: true },
+    });
     if (!ingredient) {
       throw new NotFoundException('Ingredient not found');
     }
@@ -77,7 +80,7 @@ export class IngredientsService {
   async update(
     id: number,
     updateIngredientDto: UpdateIngredientDto,
-    image: uploadImageIngredientDto,
+    image: uploadImageDto,
   ) {
     const ingredient = await this.findOne(id);
     this.ingredientRepo.merge(ingredient, updateIngredientDto);
@@ -86,17 +89,31 @@ export class IngredientsService {
       const user = await this.userService.findOne(updateIngredientDto.idUser);
       ingredient.user = user;
     }
-    if (image) {
-      const newUrl = await this.filesService.update(image, ingredient.imageUrl);
-      ingredient.imageUrl = newUrl;
+    if (!ingredient.imageUrl) {
+      const imageUrl = await this.filesService.uploadImage(image);
+      ingredient.imageUrl = imageUrl;
+    } else {
+      if (image) {
+        const newUrl = await this.filesService.update(
+          image,
+          ingredient.imageUrl,
+        );
+        ingredient.imageUrl = newUrl;
+      }
     }
     return this.ingredientRepo.save(ingredient);
   }
 
   async remove(id: number) {
     const ingredient = await this.findOne(id);
+    if (ingredient.solicitudes.length > 0) {
+      throw new BadRequestException(
+        'Este Producto posee solicitudes de compra',
+      );
+    }
     const urlImage = ingredient.imageUrl;
+    await this.ingredientRepo.delete(id);
     await this.filesService.remove(urlImage);
-    return this.ingredientRepo.delete(id);
+    return `Ingredient #${id} is Removed`;
   }
 }

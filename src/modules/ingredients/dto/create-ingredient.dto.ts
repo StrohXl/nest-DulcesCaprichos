@@ -27,7 +27,7 @@ export class CreateIngredientDto {
   description?: string;
 }
 
-export class uploadImageIngredientDto {
+export class uploadImageDto {
   @IsDefined()
   @IsNotEmpty()
   image: Multer.File;

@@ -8,6 +8,7 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import 'dotenv/config';
 import { JwtModule } from '@nestjs/jwt';
+import { FilesModule } from '../files/files.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { JwtModule } from '@nestjs/jwt';
         };
       },
     }),
+    FilesModule,
   ],
   controllers: [ConfirmUserController],
   providers: [ConfirmUserService, UserService],

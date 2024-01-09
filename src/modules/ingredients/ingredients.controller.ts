@@ -14,7 +14,7 @@ import {
 import { IngredientsService } from './ingredients.service';
 import {
   CreateIngredientDto,
-  uploadImageIngredientDto,
+  uploadImageDto,
 } from './dto/create-ingredient.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UpdateIngredientDto } from './dto/update-ingredient.dto';
@@ -28,7 +28,7 @@ export class IngredientsController {
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   async create(
-    @UploadedFile() image: uploadImageIngredientDto,
+    @UploadedFile() image: uploadImageDto,
     @Body() body: CreateIngredientDto,
   ) {
     if (!image) {
@@ -52,7 +52,7 @@ export class IngredientsController {
   @UseInterceptors(FileInterceptor('image'))
   update(
     @Param('id') id: number,
-    @UploadedFile() image: uploadImageIngredientDto,
+    @UploadedFile() image: uploadImageDto,
     @Body() updateIngredientDto: UpdateIngredientDto,
   ) {
     return this.ingredientsService.update(id, updateIngredientDto, image);

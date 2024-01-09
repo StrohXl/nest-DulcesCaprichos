@@ -18,11 +18,19 @@ export class SolicitudDeCompra {
   @ManyToOne(() => User)
   user: User;
 
-  @OneToMany(() => Solicitud, (solicitud) => solicitud.solicitudDeCompra)
+  @OneToMany(() => Solicitud, (solicitud) => solicitud.solicitudDeCompra, {
+    onDelete: 'CASCADE',
+  })
   solicitud: Solicitud[];
 
   @Column({ type: 'int' })
   price: number;
+
+  @Column({ type: 'int', default: 0 })
+  money: number;
+
+  @Column({ type: 'int', default: 0 })
+  remaining: number;
 
   @CreateDateColumn({
     type: 'timestamptz',

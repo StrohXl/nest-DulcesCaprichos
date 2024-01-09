@@ -10,10 +10,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { FindOptionsWhere, In, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { uploadImageDto } from '../ingredients/dto/create-ingredient.dto';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    private fileService: FilesService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     await this.findEmailOne(createUserDto.email, 'create');
@@ -62,9 +67,24 @@ export class UserService {
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(
+    id: number,
+    updateUserDto: UpdateUserDto,
+    image: uploadImageDto,
+  ) {
     const user = await this.findOne(id);
     this.userRepo.merge(user, updateUserDto);
+    if (!user.image) {
+      if (image) {
+        const newUrl = await this.fileService.uploadImage(image);
+        user.image = newUrl;
+      }
+    } else {
+      if (image) {
+        const newUrl = await this.fileService.update(image, user.image);
+        user.image = newUrl;
+      }
+    }
     user.password = await bcrypt.hash(user.password, 10);
     return this.userRepo.save(user);
   }

@@ -8,11 +8,15 @@ import {
   Delete,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '../auth/guards/jwt.guard';
 import { Email } from './dto/email-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { uploadImageDto } from '../ingredients/dto/create-ingredient.dto';
 
 @Controller('user')
 export class UserController {
@@ -41,8 +45,13 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @UseInterceptors(FileInterceptor('image'))
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile() image: uploadImageDto,
+  ) {
+    return this.userService.update(+id, updateUserDto, image);
   }
 
   @UseGuards(AuthGuard)

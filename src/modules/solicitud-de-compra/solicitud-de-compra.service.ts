@@ -56,6 +56,8 @@ export class SolicitudDeCompraService {
 
     // Creacion de la solicitud
     const newSolicitudDeCompra = this.sdcRepo.create({
+      remaining: user.money,
+      money: user.money,
       user,
       solicitud: solicitudes,
       price,
@@ -88,10 +90,7 @@ export class SolicitudDeCompraService {
   }
 
   async remove(id: number) {
-    const solicitudDeCompra = await this.findOne(id);
-    const user = solicitudDeCompra.user;
-    user.money += solicitudDeCompra.price;
-    this.userRepo.save(user);
+    await this.findOne(id);
     this.sdcRepo.delete(id);
     return `Removes a #${id} solicitudDeCompra`;
   }

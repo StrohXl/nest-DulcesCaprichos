@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm/dist';
 import { JwtModule } from '@nestjs/jwt';
 import { Ingredient } from '../ingredients/entities/ingredient.entity';
 import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.entity';
+import { FilesModule } from '../files/files.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.e
         };
       },
     }),
+    FilesModule,
   ],
   controllers: [UserController],
   providers: [UserService],

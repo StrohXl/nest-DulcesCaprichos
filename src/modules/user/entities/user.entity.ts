@@ -31,6 +31,9 @@ export class User {
   @Column({ type: 'int', default: 1000 })
   money: number;
 
+  @Column({ type: 'varchar', default: '' })
+  image: string;
+
   @OneToMany(() => Ingredient, (ingredients) => ingredients.user, {
     onDelete: 'CASCADE',
   })
