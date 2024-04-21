@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
+/* eslint-disable prettier/prettier */
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
 
@@ -15,7 +15,15 @@ const config = {
   autoLoadEntities: true,
   synchronize: true,
 };
+const configUrl = {
+  type: 'postgres',
+  url: process.env.DB_URL,
+  entities: ['./src/modules/*/entities/*entity.js'],
+  migrations: ['./db/migrations/*.js'],
+  autoLoadEntities: true,
+  synchronize: true,
+};
 
-export default registerAs('typeorm', () => config);
-
-export const connectionSource = new DataSource(config as DataSourceOptions);
+export default registerAs('typeorm', () =>
+  process.env.DEPLOY_SERVER == 'dev' ? config : configUrl,
+);
