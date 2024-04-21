@@ -1,4 +1,4 @@
-import { Body, Injectable, NotFoundException, Param } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   CreateProductDto,
   IngredientsQuantity,
@@ -7,7 +7,6 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
-import { In } from 'typeorm';
 import { IngredientUsageService } from '../ingredient-usage/ingredient-usage.service';
 import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.entity';
 

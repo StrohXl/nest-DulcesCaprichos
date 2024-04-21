@@ -9,7 +9,6 @@ import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.e
 import { IngredientUsageService } from '../ingredient-usage/ingredient-usage.service';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
-import { User } from '../user/entities/user.entity';
 import { FilesModule } from '../files/files.module';
 
 @Module({

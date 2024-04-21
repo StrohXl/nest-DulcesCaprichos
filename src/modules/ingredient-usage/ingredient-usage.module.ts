@@ -7,7 +7,6 @@ import { IngredientsService } from '../ingredients/ingredients.service';
 import { Ingredient } from '../ingredients/entities/ingredient.entity';
 import { Product } from '../product/entities/product.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { User } from '../user/entities/user.entity';
 import { UserModule } from '../user/user.module';
 import { FilesModule } from '../files/files.module';
 

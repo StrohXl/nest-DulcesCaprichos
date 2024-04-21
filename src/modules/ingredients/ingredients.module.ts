@@ -8,7 +8,6 @@ import { ProductService } from '../product/product.service';
 import { IngredientUsageModule } from '../ingredient-usage/ingredient-usage.module';
 import { IngredientUsage } from '../ingredient-usage/entities/ingredient-usage.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { forwardRef } from '@nestjs/common/utils';
 import { UserModule } from '../user/user.module';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';

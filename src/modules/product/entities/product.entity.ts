@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 import { IngredientUsage } from '../../ingredient-usage/entities/ingredient-usage.entity';
 
 @Entity()
