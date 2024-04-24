@@ -5,12 +5,15 @@ import * as admin from 'firebase-admin';
 
 @Injectable()
 export class FilesService {
-  private serviceAccount = firebaseConfig as admin.ServiceAccount;
-  private admi = admin.initializeApp({
-    credential: admin.credential.cert(this.serviceAccount),
-  });
+  private admin: admin.app.App;
+  constructor(private serviceAccount: admin.ServiceAccount) {
+    this.admin = admin.initializeApp({
+      credential: admin.credential.cert(this.serviceAccount),
+    });
+  }
+
   async uploadImage(file: Multer.File) {
-    const bucket = this.admi.storage().bucket('nestxmdev.appspot.com');
+    const bucket = this.admin.storage().bucket('nestxmdev.appspot.com');
     const timestamp = Date.now();
     const fileName = `images/image${timestamp}`;
     const fileUpload = bucket.file(fileName);
@@ -43,7 +46,7 @@ export class FilesService {
   }
 
   async remove(imageUrl: string) {
-    const bucket = this.admi.storage().bucket('nestxmdev.appspot.com');
+    const bucket = this.admin.storage().bucket('nestxmdev.appspot.com');
     const fileName = imageUrl.split('/').pop().split('?')[0];
     const file = bucket.file('images/' + fileName);
     return await file.delete();
