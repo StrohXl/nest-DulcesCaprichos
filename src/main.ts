@@ -19,4 +19,3 @@ async function bootstrap() {
   await app.listen(8000);
 }
 bootstrap();
-export default bootstrap;
