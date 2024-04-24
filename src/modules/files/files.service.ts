@@ -6,7 +6,8 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class FilesService {
   private admin: admin.app.App;
-  constructor(private serviceAccount: admin.ServiceAccount) {
+  private serviceAccount = firebaseConfig as admin.ServiceAccount;
+  constructor() {
     this.admin = admin.initializeApp({
       credential: admin.credential.cert(this.serviceAccount),
     });
