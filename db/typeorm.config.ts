@@ -14,6 +14,9 @@ const config = {
   migrations: ['./db/migrations/*.js'],
   autoLoadEntities: true,
   synchronize: true,
+  ssl:{
+     rejectUnauthorized: false,
+  }
 };
 const configUrl = {
   type: 'postgres',
